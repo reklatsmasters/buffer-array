@@ -1,0 +1,26 @@
+{
+  "name": "buffer-array",
+  "version": "0.0.0",
+  "description": "Write to the end, read from the beginning",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reklatsmasters/buffer-array.git"
+  },
+  "keywords": [
+    "buffer",
+    "array"
+  ],
+  "author": "Dmitry Tsvettsikh <me@reklatsmasters.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reklatsmasters/buffer-array/issues"
+  },
+  "homepage": "https://github.com/reklatsmasters/buffer-array#readme",
+  "devDependencies": {
+    "tape": "^4.4.0"
+  }
+}
