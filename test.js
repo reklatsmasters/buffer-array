@@ -105,3 +105,14 @@ test('method `pop*`', function(t) {
   
   t.end()
 })
+
+test('method `shift*`', function (t) {
+  var ba = new BufferArray(5)
+  ba.pushInt16BE(10)
+  
+  t.ok(ba.shiftInt16BE(125))
+  t.equal(ba.popInt16BE(), 10)
+  t.equal(ba.popInt16BE(), 125)
+  
+  t.end()
+})
