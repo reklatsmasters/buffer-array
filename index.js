@@ -1,11 +1,7 @@
 'use strict'
 
 class BufferArray {
-  constructor(size) {
-    if (!(this instanceof BufferArray)) {
-      return new BufferArray(size)
-    }
-    
+  constructor(size) {    
     this._buf = new Buffer(size)
     this._pos = 0
     
