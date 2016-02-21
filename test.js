@@ -116,3 +116,20 @@ test('method `shift*`', function (t) {
   
   t.end()
 })
+
+test('method `unshift*`', function (t) {
+  var ba = new BufferArray(5)
+  ba.pushInt16BE(10)
+  ba.pushInt16BE(114)
+  
+  var out = ba.unshiftInt16BE()
+  
+  t.equal(out, 10)
+  t.equal(ba.seek(), 2)
+  
+  var out2 = ba.unshiftInt32BE()
+  t.equal(out2, void 0)
+  t.equal(ba.seek(), 2)
+  
+  t.end()
+})

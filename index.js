@@ -148,10 +148,31 @@ function _shift(method, size) {
   }
 }
 
+function _unshift(method, size) {
+  return function () {
+    if (out_of_bounds_out(this._pos, size)) {
+      return  
+    }
+    
+    var value = this._buf[method](0)
+    
+    if (this._pos > 0) {
+      let buf = this._buf.slice(size, this._pos)
+      buf.copy(this._buf, 0)
+    }
+    
+    this._pos = this._pos - size
+    this._buf.fill(0, this._pos)
+    
+    return value
+  }
+}
+
 for(let m of Object.keys(methods)) {
   BufferArray.prototype['push'+m]  = _push('write' + m, methods[m])
   BufferArray.prototype['pop'+m]   = _pop('read' + m, methods[m])
-  BufferArray.prototype['shift'+m] = _shift('write' + m, methods[m])
+  BufferArray.prototype['shift' + m] = _shift('write' + m, methods[m])
+  BufferArray.prototype['unshift'+m] = _unshift('read' + m, methods[m])
 }
 
 module.exports = function ba(size) {
