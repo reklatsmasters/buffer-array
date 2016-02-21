@@ -93,10 +93,7 @@ class BufferArray {
     var bout = new Buffer(size)
     this._buf.copy(bout)
     
-    if (this._pos > 0) {
-      let buf = this._buf.slice(size, this._pos)
-      buf.copy(this._buf, 0)
-    }
+    shift_buffer(this._buf, this._pos, size)
     
     this._pos = this._pos - size
     this._buf.fill(0, this._pos)
@@ -201,16 +198,20 @@ function _shift(method, size) {
     }
     
     var value = this._buf[method](0)
-    
-    if (this._pos > 0) {
-      let buf = this._buf.slice(size, this._pos)
-      buf.copy(this._buf, 0)
-    }
-    
+
+    shift_buffer(this._buf, this._pos, size)
+        
     this._pos = this._pos - size
     this._buf.fill(0, this._pos)
     
     return value
+  }
+}
+
+function shift_buffer(source, pos, size) {
+  if (pos > 0) {
+    let buf = source.slice(size, pos)
+    buf.copy(source, 0)
   }
 }
 
