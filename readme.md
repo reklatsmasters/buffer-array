@@ -14,8 +14,8 @@ const ba = require('buffer-array')
 
 var buf = ba(4)
 
-ba.push(new Buffer([0, 0x0a]))
-var x = ba.popInt16BE() // x == 10
+buf.push(new Buffer([0, 0x0a]))
+var x = buf.popInt16BE() // x == 10
 ```
 
 ## API
