@@ -64,6 +64,10 @@ test('method `push`', function(t) {
   t.notOk(ba.push(new Buffer([33, 7])), 'out of bounds')
   t.equal(ba.seek(), 4)
   
+  t.throws(function () {
+    ba.push(3)
+  }, 'Expected buffer')
+  
   t.end()
 })
 
@@ -87,6 +91,10 @@ test('method `push*`', function(t) {
   var int16 = ba.toBuffer().slice(0, 2)
   
   t.ok(int16.equals(new Buffer([0, 0x0a])), 'buffers should be equals')
+  t.equal(ba.seek(), 2)
+  
+  t.notOk(ba.pushInt16BE(10), 'out of bounds')
+  t.equal(ba.seek(), 2)
   t.end()
 })
 
@@ -111,6 +119,9 @@ test('method `unshift*`', function (t) {
   ba.pushInt16BE(10)
   
   t.ok(ba.unshiftInt16BE(125))
+  t.equal(ba.seek(), 4)
+  t.notOk(ba.unshiftInt16BE(125), 'out of bounds')
+  t.equal(ba.seek(), 4)
   t.equal(ba.popInt16BE(), 10)
   t.equal(ba.popInt16BE(), 125)
   
@@ -159,6 +170,10 @@ test('method `unshift`', function(t) {
   
   t.notOk(ba.unshift(new Buffer([33, 7])), 'out of bounds')
   t.equal(ba.seek(), 4)
+  
+  t.throws(function () {
+    ba.unshift(3)
+  }, 'Expected buffer')
   
   t.end()
 })
