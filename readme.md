@@ -20,6 +20,11 @@ var x = ba.popInt16BE() // x == 10
 
 ## API
 
+* **`constructor(data: Buffer): BufferArray`**
+* **`constructor(size: Number): BufferArray`**
+
+Create new instance of `buffer-array` with fixed-size buffer
+
 #### `push(data: Buffer): bool`
 Write buffer `data` to the end
 
