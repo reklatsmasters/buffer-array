@@ -58,6 +58,52 @@ class BufferArray {
     return bout
   }
   
+  /**
+   * Write raw buffer to the beginning
+   * @param {buffer} buf
+   */
+  unshift(buf) {
+    if (!Buffer.isBuffer(buf)) {
+      throw new TypeError('Expected buffer')  
+    }
+    
+    if (out_of_bounds_in(this._buf, this._pos, buf.length)) {
+      return false
+    }
+    
+    if (this._pos > 0) {
+      let buf = this._buf.slice(0, this._pos)
+      buf.copy(this._buf, buf.length)
+    }
+    
+    buf.copy(this._buf, 0)
+    this._pos = this._pos + buf.length
+    
+    return true
+  }
+  
+  /**
+   * Read `size` bytes from the beginning
+   */
+  shift(size) {
+    if (out_of_bounds_out(this._pos, size)) {
+      return
+    }
+    
+    var bout = new Buffer(size)
+    this._buf.copy(bout)
+    
+    if (this._pos > 0) {
+      let buf = this._buf.slice(size, this._pos)
+      buf.copy(this._buf, 0)
+    }
+    
+    this._pos = this._pos - size
+    this._buf.fill(0, this._pos)
+    
+    return bout
+  }
+  
   get length() {
     return this._buf.length
   }

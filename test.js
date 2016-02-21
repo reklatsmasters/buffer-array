@@ -133,3 +133,32 @@ test('method `unshift*`', function (t) {
   
   t.end()
 })
+
+test('method `shift`', function(t) {
+  var ba = new BufferArray(new Buffer([13, 17, 23, 12]))
+  
+  var out = ba.shift(3)
+  
+  t.equal(ba.seek(), 1)
+  t.ok(out.equals(new Buffer([13, 17, 23])), 'buffers should be equals')
+  t.ok(ba.toBuffer().equals(new Buffer([12, 0, 0, 0])), 'buffers should be equals')
+  t.notOk(ba.shift(2))
+  
+  t.end()
+})
+
+test('method `unshift`', function(t) {
+  var ba = new BufferArray(5)
+  
+  t.ok(ba.unshift(new Buffer([13, 17])))
+  t.ok(ba.unshift(new Buffer([23, 12])))  
+  t.equal(ba.seek(), 4)
+  
+  var ba_b = ba.toBuffer().slice(0, 4)
+  t.ok(ba_b.equals(new Buffer([23, 12, 13, 17])), 'buffers should be equals')
+  
+  t.notOk(ba.unshift(new Buffer([33, 7])), 'out of bounds')
+  t.equal(ba.seek(), 4)
+  
+  t.end()
+})
