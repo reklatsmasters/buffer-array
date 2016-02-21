@@ -4,7 +4,8 @@
   "description": "Write to the end, read from the beginning",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js"
+    "test": "tape test.js | faucet",
+    "cover": "istanbul cover -x test* node_modules/tape/bin/tape test.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/reklatsmasters/buffer-array#readme",
   "devDependencies": {
+    "faucet": "0.0.1",
     "tape": "^4.4.0"
   }
 }
