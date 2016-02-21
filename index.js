@@ -176,7 +176,7 @@ function _pop(method, size) {
   }
 }
 
-function _shift(method, size) {
+function _unshift(method, size) {
   return function (value) {
     if (out_of_bounds_in(this._buf, this._pos, size)) {
       return false
@@ -194,7 +194,7 @@ function _shift(method, size) {
   }
 }
 
-function _unshift(method, size) {
+function _shift(method, size) {
   return function () {
     if (out_of_bounds_out(this._pos, size)) {
       return  
@@ -217,8 +217,8 @@ function _unshift(method, size) {
 for(let m of Object.keys(methods)) {
   BufferArray.prototype['push'+m]  = _push('write' + m, methods[m])
   BufferArray.prototype['pop'+m]   = _pop('read' + m, methods[m])
-  BufferArray.prototype['shift' + m] = _shift('write' + m, methods[m])
-  BufferArray.prototype['unshift'+m] = _unshift('read' + m, methods[m])
+  BufferArray.prototype['shift' + m] = _shift('read' + m, methods[m])
+  BufferArray.prototype['unshift'+m] = _unshift('write' + m, methods[m])
 }
 
 module.exports = function ba(size) {

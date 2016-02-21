@@ -106,28 +106,28 @@ test('method `pop*`', function(t) {
   t.end()
 })
 
-test('method `shift*`', function (t) {
+test('method `unshift*`', function (t) {
   var ba = new BufferArray(5)
   ba.pushInt16BE(10)
   
-  t.ok(ba.shiftInt16BE(125))
+  t.ok(ba.unshiftInt16BE(125))
   t.equal(ba.popInt16BE(), 10)
   t.equal(ba.popInt16BE(), 125)
   
   t.end()
 })
 
-test('method `unshift*`', function (t) {
+test('method `shift*`', function (t) {
   var ba = new BufferArray(5)
   ba.pushInt16BE(10)
   ba.pushInt16BE(114)
   
-  var out = ba.unshiftInt16BE()
+  var out = ba.shiftInt16BE()
   
   t.equal(out, 10)
   t.equal(ba.seek(), 2)
   
-  var out2 = ba.unshiftInt32BE()
+  var out2 = ba.shiftInt32BE()
   t.equal(out2, void 0)
   t.equal(ba.seek(), 2)
   
