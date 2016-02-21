@@ -1,7 +1,7 @@
 {
   "name": "buffer-array",
   "version": "0.0.0",
-  "description": "Write to the end, read from the beginning",
+  "description": "The Buffer with Array API",
   "main": "index.js",
   "scripts": {
     "test": "tape test.js | faucet",
@@ -13,7 +13,9 @@
   },
   "keywords": [
     "buffer",
-    "array"
+    "array",
+    "bl",
+    "bufferlist"
   ],
   "author": "Dmitry Tsvettsikh <me@reklatsmasters.com>",
   "license": "MIT",
