@@ -25,6 +25,27 @@ var x = buf.popInt16BE() // x == 10
 
 Create new instance of `buffer-array` with fixed-size buffer
 
+* **`seek(pos: Number): void`**
+* **`seek(): Number`**
+
+Set / get current pointer position. 
+
+```js
+var packet = ba(38)
+packet.pushInt32BE(640)
+packet.seek() //  == 4
+packet.length //  == 38  
+```
+
+#### `length: Number`
+Get length of the internal buffer
+
+#### `clear(): void`
+Remove all written data and set pointer position to 0.
+
+#### `toBuffer(): Buffer`
+Get internal buffer (_not a copy_)
+
 #### `push(data: Buffer): bool`
 Write buffer `data` to the end
 
