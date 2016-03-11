@@ -1,15 +1,15 @@
 'use strict'
 
 class BufferArray {
-  constructor(size) {    
+  constructor(size) {
     this._buf = new Buffer(size)
     this._pos = 0
-    
+
     if (Buffer.isBuffer(size)) {
       this._pos = this._buf.length
     }
   }
-  
+
   /**
    * Set pointer position
    * @param {number} pos
@@ -18,7 +18,7 @@ class BufferArray {
     if (!arguments.length) {
       return this._pos
     }
-    
+
     this._pos = pos
   }
 
@@ -28,16 +28,16 @@ class BufferArray {
    */
   push(buf) {
     if (!Buffer.isBuffer(buf)) {
-      throw new TypeError('Expected buffer')  
+      throw new TypeError('Expected buffer')
     }
-    
+
     if (out_of_bounds_in(this._buf, this._pos, buf.length)) {
       return false
     }
-    
+
     buf.copy(this._buf, this._pos)
     this._pos = this._pos + buf.length
-    
+
     return true
   }
 
@@ -48,40 +48,40 @@ class BufferArray {
     if (out_of_bounds_out(this._pos, size)) {
       return
     }
-    
+
     var bout = new Buffer(size)
     this._buf.copy(bout, 0, this._pos - size, this._pos)
-    
+
     this._pos = this._pos - size
     this._buf.fill(0, this._pos)
 
     return bout
   }
-  
+
   /**
    * Write raw buffer to the beginning
    * @param {buffer} buf
    */
   unshift(buf) {
     if (!Buffer.isBuffer(buf)) {
-      throw new TypeError('Expected buffer')  
+      throw new TypeError('Expected buffer')
     }
-    
+
     if (out_of_bounds_in(this._buf, this._pos, buf.length)) {
       return false
     }
-    
+
     if (this._pos > 0) {
       let buf = this._buf.slice(0, this._pos)
       buf.copy(this._buf, buf.length)
     }
-    
+
     buf.copy(this._buf, 0)
     this._pos = this._pos + buf.length
-    
+
     return true
   }
-  
+
   /**
    * Read `size` bytes from the beginning
    */
@@ -89,27 +89,27 @@ class BufferArray {
     if (out_of_bounds_out(this._pos, size)) {
       return
     }
-    
+
     var bout = new Buffer(size)
     this._buf.copy(bout)
-    
+
     shift_buffer(this._buf, this._pos, size)
-    
+
     this._pos = this._pos - size
     this._buf.fill(0, this._pos)
-    
+
     return bout
   }
-  
+
   get length() {
     return this._buf.length
   }
-  
+
   clear() {
     this._buf.fill(0)
     this._pos = 0
   }
-  
+
   toBuffer() {
     return this._buf
   }
@@ -151,10 +151,10 @@ function _push(method, size) {
     if (out_of_bounds_in(this._buf, this._pos, size)) {
       return false
     }
-    
+
     this._buf[method](value, this._pos)
     this._pos = this._pos + size
-    
+
     return true
   }
 }
@@ -162,13 +162,13 @@ function _push(method, size) {
 function _pop(method, size) {
   return function() {
     if (out_of_bounds_out(this._pos, size)) {
-      return  
+      return
     }
-    
+
     var value = this._buf[method](this._pos - size)
     this._pos = this._pos - size
     this._buf.fill(0, this._pos)
-    
+
     return value
   }
 }
@@ -178,15 +178,15 @@ function _unshift(method, size) {
     if (out_of_bounds_in(this._buf, this._pos, size)) {
       return false
     }
-    
+
     if (this._pos > 0) {
       let buf = this._buf.slice(0, this._pos)
       buf.copy(this._buf, size)
     }
-    
+
     this._buf[method](value, 0)
     this._pos = this._pos + size
-    
+
     return true
   }
 }
@@ -194,16 +194,16 @@ function _unshift(method, size) {
 function _shift(method, size) {
   return function () {
     if (out_of_bounds_out(this._pos, size)) {
-      return  
+      return
     }
-    
+
     var value = this._buf[method](0)
 
     shift_buffer(this._buf, this._pos, size)
-        
+
     this._pos = this._pos - size
     this._buf.fill(0, this._pos)
-    
+
     return value
   }
 }
