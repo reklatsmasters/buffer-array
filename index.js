@@ -1,6 +1,9 @@
 'use strict'
 
 class BufferArray {
+  /**
+   * @param size {Buffer|Number|Array}
+   */
   constructor(size) {
     this._buf = new Buffer(size)
     this._pos = 0
@@ -12,7 +15,8 @@ class BufferArray {
 
   /**
    * Set pointer position
-   * @param {number} pos
+   * @param pos {Number} optional
+   * @returns {Number|void}
    */
   seek(pos) {
     if (!arguments.length) {
@@ -24,7 +28,8 @@ class BufferArray {
 
   /**
    * Write raw buffer to the end
-   * @param {buffer} buf
+   * @param buf {Buffer}
+   * @returns {Boolean}
    */
   push(buf) {
     if (!Buffer.isBuffer(buf)) {
@@ -43,10 +48,12 @@ class BufferArray {
 
   /**
    * Read `size` bytes from the end
+   * @param size {Number}
+   * @returns {Buffer|Boolean}
    */
   pop(size) {
     if (out_of_bounds_out(this._pos, size)) {
-      return
+      return false
     }
 
     var bout = new Buffer(size)
@@ -60,7 +67,8 @@ class BufferArray {
 
   /**
    * Write raw buffer to the beginning
-   * @param {buffer} buf
+   * @param {Buffer} buf
+   * @returns {Boolean}
    */
   unshift(buf) {
     if (!Buffer.isBuffer(buf)) {
@@ -84,10 +92,12 @@ class BufferArray {
 
   /**
    * Read `size` bytes from the beginning
+   * @param size {Number}
+   * @returns {Buffer|Boolean}
    */
   shift(size) {
     if (out_of_bounds_out(this._pos, size)) {
-      return
+      return false
     }
 
     var bout = new Buffer(size)
@@ -101,29 +111,46 @@ class BufferArray {
     return bout
   }
 
+  /**
+   * @returns {Number}
+   */
   get length() {
     return this._buf.length
   }
 
+  /**
+   * clear internal buffer
+   */
   clear() {
     this._buf.fill(0)
     this._pos = 0
   }
 
+  /**
+   * convert buffer-array to Buffer
+   * @returns {Buffer}
+   */
   toBuffer() {
     return this._buf
   }
 }
 
 /**
- * true if out of bounds
+ * return true if out of bounds
+ * @param buf {Buffer}
+ * @param pos {Number}
+ * @param size {Number}
+ * @returns {Boolean}
  */
 function out_of_bounds_in(buf, pos, size) {
   return pos + size > buf.length
 }
 
 /**
- * true if out of bounds
+ * return true if out of bounds
+ * @param pos {Number}
+ * @param size {Number}
+ * @returns {Boolean}
  */
 function out_of_bounds_out(pos, size) {
   return pos - size < 0
@@ -146,6 +173,13 @@ const methods = {
   , 'UInt8'     : 1
 }
 
+/**
+ * factory of `push*` methods
+ * @param method {String}
+ * @param size {Number}
+ * @returns {Function}
+ * @private
+ */
 function _push(method, size) {
   return function(value) {
     if (out_of_bounds_in(this._buf, this._pos, size)) {
@@ -159,6 +193,13 @@ function _push(method, size) {
   }
 }
 
+/**
+ * factory of `pop*` methods
+ * @param method {String}
+ * @param size {Number}
+ * @returns {Function}
+ * @private
+ */
 function _pop(method, size) {
   return function() {
     if (out_of_bounds_out(this._pos, size)) {
@@ -173,6 +214,13 @@ function _pop(method, size) {
   }
 }
 
+/**
+ * factory of `unshift*` methods
+ * @param method {String}
+ * @param size {Number}
+ * @returns {Function}
+ * @private
+ */
 function _unshift(method, size) {
   return function (value) {
     if (out_of_bounds_in(this._buf, this._pos, size)) {
@@ -191,6 +239,13 @@ function _unshift(method, size) {
   }
 }
 
+/**
+ * factory of `shift*` methods
+ * @param method {String}
+ * @param size {Number}
+ * @returns {Function}
+ * @private
+ */
 function _shift(method, size) {
   return function () {
     if (out_of_bounds_out(this._pos, size)) {
@@ -208,6 +263,12 @@ function _shift(method, size) {
   }
 }
 
+/**
+ * move data from `source` buffer to the beginning
+ * @param source {Buffer}
+ * @param pos {Number}
+ * @param size {Number}
+ */
 function shift_buffer(source, pos, size) {
   if (pos > 0) {
     let buf = source.slice(size, pos)
@@ -222,6 +283,10 @@ for(let m of Object.keys(methods)) {
   BufferArray.prototype['unshift'+m] = _unshift('write' + m, methods[m])
 }
 
+/**
+ * @param size {Buffer|Number|Array}
+ * @returns {BufferArray}
+ */
 module.exports = function ba(size) {
   return new BufferArray(size)
 }
