@@ -80,8 +80,8 @@ class BufferArray {
     }
 
     if (this._pos > 0) {
-      let buf = this._buf.slice(0, this._pos)
-      buf.copy(this._buf, buf.length)
+      let b = this._buf.slice(0, this._pos)
+      b.copy(this._buf, buf.length)
     }
 
     buf.copy(this._buf, 0)

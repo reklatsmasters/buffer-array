@@ -162,14 +162,14 @@ test('method `unshift`', function(t) {
   var ba = new BufferArray(5)
 
   t.ok(ba.unshift(new Buffer([13, 17])))
-  t.ok(ba.unshift(new Buffer([23, 12])))
-  t.equal(ba.seek(), 4)
+  t.ok(ba.unshift(new Buffer([23, 12, 58])))
+  t.equal(ba.seek(), 5)
 
-  var ba_b = ba.toBuffer().slice(0, 4)
-  t.ok(ba_b.equals(new Buffer([23, 12, 13, 17])), 'buffers should be equals')
+  var ba_b = ba.toBuffer().slice(0)
+  t.ok(ba_b.equals(new Buffer([23, 12, 58, 13, 17])), 'buffers should be equals')
 
   t.notOk(ba.unshift(new Buffer([33, 7])), 'out of bounds')
-  t.equal(ba.seek(), 4)
+  t.equal(ba.seek(), 5)
 
   t.throws(function () {
     ba.unshift(3)
