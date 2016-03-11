@@ -52,7 +52,7 @@ test('method `clear`', function(t) {
 })
 
 test('method `push`', function(t) {
-  var ba = new BufferArray(5)
+  var ba = new BufferArray(4)
 
   t.ok(ba.push(new Buffer([13, 17])))
   t.ok(ba.push(new Buffer([23, 12])))

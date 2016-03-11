@@ -119,7 +119,7 @@ class BufferArray {
  * true if out of bounds
  */
 function out_of_bounds_in(buf, pos, size) {
-  return pos + size >= buf.length
+  return pos + size > buf.length
 }
 
 /**
