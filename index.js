@@ -28,12 +28,17 @@ class BufferArray {
 
   /**
    * Write raw buffer to the end
-   * @param buf {Buffer}
+   * @param buf {Buffer|string}
+   * @param encoding {string}
    * @returns {Boolean}
    */
-  push(buf) {
+  push(buf, encoding) {
     if (!Buffer.isBuffer(buf)) {
-      throw new TypeError('Expected buffer')
+      if (typeof buf === 'string') {
+        buf = new Buffer(buf, encoding)
+      } else {
+        throw new TypeError('Expected buffer')
+      }
     }
 
     if (out_of_bounds_in(this._buf, this._pos, buf.length)) {
@@ -67,12 +72,17 @@ class BufferArray {
 
   /**
    * Write raw buffer to the beginning
-   * @param {Buffer} buf
+   * @param {Buffer|string} buf
+   * @param encoding {string}
    * @returns {Boolean}
    */
-  unshift(buf) {
+  unshift(buf, encoding) {
     if (!Buffer.isBuffer(buf)) {
-      throw new TypeError('Expected buffer')
+      if (typeof buf === 'string') {
+        buf = new Buffer(buf, encoding)
+      } else {
+        throw new TypeError('Expected buffer')
+      }
     }
 
     if (out_of_bounds_in(this._buf, this._pos, buf.length)) {

@@ -67,6 +67,10 @@ test('method `push`', function(t) {
   t.throws(function () {
     ba.push(3)
   }, 'Expected buffer')
+  
+  ba.seek(2)
+  t.ok(ba.push('09F3', 'hex'))
+  t.ok(ba.toBuffer().equals(new Buffer([13, 17, 0x09, 0xF3])))
 
   t.end()
 })
@@ -205,5 +209,12 @@ test('method `unshift`', function(t) {
     ba.unshift(3)
   }, 'Expected buffer')
 
+  ba.clear()
+  
+  t.ok(ba.unshift('A1B2C3', 'hex'))
+  t.ok(ba.unshift(new Buffer([0x03, 0x12])))
+  t.equal(ba.seek(), 5)
+  t.ok(ba.toBuffer().equals(new Buffer([0x03, 0x12, 0xA1, 0xB2, 0xC3])))
+  
   t.end()
 })
