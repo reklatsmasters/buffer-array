@@ -158,6 +158,36 @@ test('method `shift`', function(t) {
   t.end()
 })
 
+test('method `read`', function(t) {
+  var ba = new BufferArray(new Buffer([13, 17, 23, 12]))
+
+  var out = ba.read(3)
+
+  t.equal(ba.seek(), 1)
+  t.ok(out.equals(new Buffer([13, 17, 23])), 'buffers should be equals')
+  t.ok(ba.toBuffer().equals(new Buffer([12, 0, 0, 0])), 'buffers should be equals')
+  t.notOk(ba.read(2))
+
+  t.end()
+})
+
+test('method `read*`', function (t) {
+  var ba = new BufferArray(5)
+  ba.pushInt16BE(10)
+  ba.pushInt16BE(114)
+
+  var out = ba.readInt16BE()
+
+  t.equal(out, 10)
+  t.equal(ba.seek(), 2)
+
+  var out2 = ba.readInt32BE()
+  t.equal(out2, void 0)
+  t.equal(ba.seek(), 2)
+
+  t.end()
+})
+
 test('method `unshift`', function(t) {
   var ba = new BufferArray(5)
 

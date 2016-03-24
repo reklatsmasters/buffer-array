@@ -135,6 +135,9 @@ class BufferArray {
   }
 }
 
+// alias to shift() method
+BufferArray.prototype.read = BufferArray.prototype.shift
+
 /**
  * return true if out of bounds
  * @param buf {Buffer}
@@ -280,6 +283,7 @@ for(let m of Object.keys(methods)) {
   BufferArray.prototype['push'+m]  = _push('write' + m, methods[m])
   BufferArray.prototype['pop'+m]   = _pop('read' + m, methods[m])
   BufferArray.prototype['shift' + m] = _shift('read' + m, methods[m])
+  BufferArray.prototype['read' + m] = _shift('read' + m, methods[m])
   BufferArray.prototype['unshift'+m] = _unshift('write' + m, methods[m])
 }
 
