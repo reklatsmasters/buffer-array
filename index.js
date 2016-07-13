@@ -33,13 +33,7 @@ class BufferArray {
    * @returns {Boolean}
    */
   push(buf, encoding) {
-    if (!Buffer.isBuffer(buf)) {
-      if (typeof buf === 'string') {
-        buf = new Buffer(buf, encoding)
-      } else {
-        throw new TypeError('Expected buffer')
-      }
-    }
+    buf = string2buffer(buf, encoding)
 
     if (out_of_bounds_in(this._buf, this._pos, buf.length)) {
       return false
@@ -77,13 +71,7 @@ class BufferArray {
    * @returns {Boolean}
    */
   unshift(buf, encoding) {
-    if (!Buffer.isBuffer(buf)) {
-      if (typeof buf === 'string') {
-        buf = new Buffer(buf, encoding)
-      } else {
-        throw new TypeError('Expected buffer')
-      }
-    }
+    buf = string2buffer(buf, encoding)
 
     if (out_of_bounds_in(this._buf, this._pos, buf.length)) {
       return false
@@ -287,6 +275,18 @@ function shift_buffer(source, pos, size) {
     let buf = source.slice(size, pos)
     buf.copy(source, 0)
   }
+}
+
+function string2buffer(str, enc) {
+  if (!Buffer.isBuffer(str)) {
+    if (typeof str === 'string') {
+     return new Buffer(str, enc)
+    } else {
+      throw new TypeError('Expected buffer or string')
+    }
+  }
+
+  return str
 }
 
 for(let m of Object.keys(methods)) {
