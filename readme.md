@@ -86,23 +86,25 @@ Read `size` bytes from the end and return buffer. Return `undefined` if out of b
 
 Read fixed-size number from the end. Return `undefined` if out of bounds.
 
-#### `shift(size: Number): Buffer`
+* **`shift(size: Number): Buffer`**
+* **`read(size: Number): Buffer`**
+
 Read `size` bytes from the beginning and return buffer. Return `undefined` if out of bounds.
 
-* **`shiftDoubleBE(): Number`**
-* **`shiftDoubleLE(): Number`**
-* **`shiftFloatBE():  Number`**
-* **`shiftFloatLE():  Number`**
-* **`shiftInt32BE():  Number`**
-* **`shiftInt32LE():  Number`**
-* **`shiftInt16BE():  Number`**
-* **`shiftInt16LE():  Number`**
-* **`shiftUInt32BE(): Number`**
-* **`shiftUInt32LE(): Number`**
-* **`shiftUInt16BE(): Number`**
-* **`shiftUInt16LE(): Number`**
-* **`shiftInt8():  Number`**
-* **`shiftUInt8(): Number`**
+* **`shiftDoubleBE(): Number`**, **`readDoubleBE(): Number`**
+* **`shiftDoubleLE(): Number`**, **`readDoubleLE(): Number`**
+* **`shiftFloatBE():  Number`**, **`readFloatBE():  Number`**
+* **`shiftFloatLE():  Number`**, **`readFloatLE():  Number`**
+* **`shiftInt32BE():  Number`**, **`readInt32BE():  Number`**
+* **`shiftInt32LE():  Number`**, **`readInt32LE():  Number`**
+* **`shiftInt16BE():  Number`**, **`readInt16BE():  Number`**
+* **`shiftInt16LE():  Number`**, **`readInt16LE():  Number`**
+* **`shiftUInt32BE(): Number`**, **`readUInt32BE(): Number`**
+* **`shiftUInt32LE(): Number`**, **`readUInt32LE(): Number`**
+* **`shiftUInt16BE(): Number`**, **`readUInt16BE(): Number`**
+* **`shiftUInt16LE(): Number`**, **`readUInt16LE(): Number`**
+* **`shiftInt8():  Number`**,    **`readInt8():  Number`**
+* **`shiftUInt8(): Number`**,    **`readUInt8(): Number`**
 
 Read fixed-size number from the beginning. Return `undefined` if out of bounds.
 
