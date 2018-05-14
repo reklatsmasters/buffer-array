@@ -2,6 +2,8 @@
 
 Use [`bl`](https://npmjs.org/package/bl) or [`binary-data`](https://npmjs.org/package/bl) instead. Please, let me known if you want to take this package name.
 
+---
+
 # buffer-array
 [![travis](https://travis-ci.org/reklatsmasters/buffer-array.svg)](https://travis-ci.org/reklatsmasters/buffer-array)
 [![npm](https://img.shields.io/npm/v/buffer-array.svg)](https://npmjs.org/package/buffer-array)
