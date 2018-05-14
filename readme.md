@@ -1,10 +1,14 @@
+# DEPRECATED
+
+Use [`bl`](https://npmjs.org/package/bl) or [`binary-data`](https://npmjs.org/package/bl) instead. Please, let me known if you want to take this package name.
+
 # buffer-array
-[![travis](https://travis-ci.org/ReklatsMasters/buffer-array.svg)](https://travis-ci.org/ReklatsMasters/buffer-array)
+[![travis](https://travis-ci.org/reklatsmasters/buffer-array.svg)](https://travis-ci.org/reklatsmasters/buffer-array)
 [![npm](https://img.shields.io/npm/v/buffer-array.svg)](https://npmjs.org/package/buffer-array)
 [![license](https://img.shields.io/npm/l/buffer-array.svg)](https://npmjs.org/package/buffer-array)
 [![downloads](https://img.shields.io/npm/dm/buffer-array.svg)](https://npmjs.org/package/buffer-array)
-[![Code Climate](https://codeclimate.com/github/ReklatsMasters/buffer-array/badges/gpa.svg)](https://codeclimate.com/github/ReklatsMasters/buffer-array)
-[![Test Coverage](https://codeclimate.com/github/ReklatsMasters/buffer-array/badges/coverage.svg)](https://codeclimate.com/github/ReklatsMasters/buffer-array)
+[![Code Climate](https://codeclimate.com/github/reklatsmasters/buffer-array/badges/gpa.svg)](https://codeclimate.com/github/ReklatsMasters/buffer-array)
+[![Test Coverage](https://codeclimate.com/github/reklatsmasters/buffer-array/badges/coverage.svg)](https://codeclimate.com/github/ReklatsMasters/buffer-array)
 
 The Buffer with Array API
 
